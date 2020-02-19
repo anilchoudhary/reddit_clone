@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 
@@ -24,10 +24,13 @@ def signup(request):
 
 def loginview(request):
     if request.method == "POST":
-        user = authenticate(username=request.POST['username'], password=request.POST['password'])
+        user = authenticate(
+            username=request.POST['username'], password=request.POST['password'])
         if user is not None:
             login(request, user)
+            if 'next' in request.POST:
+                return redirect(request.POST['next'])
         else:
-            return render(request, 'accounts/login.html', {'error':'The username and password didn\'t match'})
+            return render(request, 'accounts/login.html', {'error': 'The username and password didn\'t match'})
     else:
         return render(request, 'accounts/login.html')
