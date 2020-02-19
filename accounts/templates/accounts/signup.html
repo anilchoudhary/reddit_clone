@@ -1,0 +1,24 @@
+<h1>Sign Up</h1>
+
+{% if error %}
+{{ error }}
+<br>
+<br>
+{% endif %}
+
+<form action="{% url 'accounts:signup' %}" method="POST">
+	{% csrf_token %}
+	Username:
+	<input type="text" name="username" id="">
+	<br>
+	<br>
+	Password:
+	<input type="password" name="password" id="">
+	<br>
+	<br>
+	Confirm Password:
+	<input type="password" name="confirmpassword" id="">
+	<br>
+	<br>
+	<input type="submit" value="Sign Up">
+</form>
