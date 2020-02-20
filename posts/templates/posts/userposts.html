@@ -1,17 +1,14 @@
 {% extends 'base.html' %}
 {% block content %}
 	<br>
-	<h1>The homepage of somewhere!</h1>
-	<a class="btn btn-primary" href="{% url 'posts:create' %}">New Post</a>
-	<br>
+	<h1>All Posts by {{ author.username }}</h1>
 	<br>
 	{% for post in posts.all %}
 		<table>
 			<tr>
 				<td class="pr-3"> <a href="#" onclick="document.getElementById('upvote{{ post.id }}').submit() "> <i class="fas fa-caret-up"></i></a><br> {{ post.votes_total }} <br><a href="#" onclick="document.getElementById('downvote{{ post.id }}').submit() "> <i class="fas fa-caret-down"></i></a></td>
 				<td><a target="_blank" href="{{post.url}}">{{post.title}}</a>
-				<br> {{post.pub_date_pretty}} by
-				<a href="{% url 'posts:userposts' post.author.id %}"> {{post.author}} </a>
+				<br> {{post.pub_date_pretty}} by <a href="{% url 'posts:userposts' post.author.id %}"> {{post.author}} </a>
 			<br> </td>
 		</tr>
 	</table>
@@ -24,6 +21,7 @@
 		{% csrf_token %}
 		<!-- <input type="hidden"> -->
 	</form>
+	
 	
 {% endfor %}
 {% endblock %}

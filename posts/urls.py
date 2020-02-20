@@ -7,4 +7,5 @@ urlpatterns = [
     path('create/', views.create, name="create"),
     path('<int:pk>/upvote/', views.upvote, name="upvote"),
     path('<int:pk>/downvote/', views.downvote, name="downvote"),
+    path('user/<int:fk>', views.userposts, name="userposts"),
 ]

@@ -40,4 +40,4 @@ def loginview(request):
 def logoutview(request):
     if request.method == "POST":
         logout(request)
-        return redirect('home')
+        return render(request, 'accounts/login.html')
