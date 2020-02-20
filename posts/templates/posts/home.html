@@ -1,28 +1,28 @@
 {% extends 'base.html' %}
-
 {% block content %}
-
-
-
-<h1>The homepage of somewhere!</h1>
-<a href="{% url 'posts:create' %}">New Post</a>
-<br>
-<br>
-{% for post in posts.all %}
-	<form action="{% url 'posts:upvote' post.id %} " method="POST">
-		{% csrf_token %}
-		<input type="submit" value="UP">
-	</form>
-	{{ post.votes_total }}
-	<form method="POST" action="{% url 'posts:downvote' post.id %} ">
-		{% csrf_token %}
-		<input type="submit" value="DOWN">
-	</form>
-	<span> - </span>
-	<a target="_blank" href="{{post.url}}">{{post.title}}</a>
+	<h1>The homepage of somewhere!</h1>
+	<a class="btn btn-primary" href="{% url 'posts:create' %}">New Post</a>
 	<br>
-	{{post.pub_date}} by {{post.author.username}}
 	<br>
+	{% for post in posts.all %}
+		<table>
+			<tr>
+				<td class="pr-3"> <a href="#" onclick="document.getElementById('upvote{{ post.id }}').submit() "> <i class="fas fa-caret-up"></i></a><br> {{ post.votes_total }} <br><a href="#" onclick="document.getElementById('downvote{{ post.id }}').submit() "> <i class="fas fa-caret-down"></i></a></td>
+				<td><a target="_blank" href="{{post.url}}">{{post.title}}</a>
+				<br> {{post.pub_date_pretty}} by {{post.author.username}}
+			<br> </td>
+		</tr>
+	</table>
+	<form id="upvote{{ post.id }}" action="{% url 'posts:upvote' post.id %} " method="POST">
+		{% csrf_token %}
+		<!-- <input type="hidden" > -->
+	</form>
+	
+	<form id="downvote{{ post.id }}" method="POST" action="{% url 'posts:downvote' post.id %} ">
+		{% csrf_token %}
+		<!-- <input type="hidden"> -->
+	</form>
+	
+	
 {% endfor %}
-
 {% endblock %}
